@@ -1,0 +1,14 @@
+.button_logar{
+    border:0;
+    background: #48A65B;
+    display: block;
+    margin:20px auto;
+    font-size: 18px;
+    text-align: center;
+    border: 1px  #000000;
+    padding: 14px 40px;
+    width: 200px;
+    outline: none;
+    border-radius: 24px;
+    cursor: pointer;
+}

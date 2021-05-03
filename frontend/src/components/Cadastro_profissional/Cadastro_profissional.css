@@ -1,0 +1,59 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #bdc2be;
+}
+
+.box{
+    width: 400px;
+    padding: 10px;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: rgba(18, 47, 89, 0.8);
+    text-align: center;
+    border-radius: 20px;
+}
+.box h1{
+ color: white;
+ font-weight: 800;
+ text-align: center;
+}
+
+.box input[type = "text"],.box input[type = "password"]{
+ border:0;
+ background: #FFFFFF;
+ display: block;
+ margin:20px auto;
+ text-align: center;
+ border: 2px solid #FFFFFF;
+ padding: 9px 10px;
+ width: 200px;
+ outline: none;
+ border-radius: 24px;
+ transition: 0.25s;
+}
+
+.box input[type = "text"]:focus,.box input[type = "password"]:focus{
+    width: 280px;
+}
+
+.button_cadastrar{
+    border:0;
+    background: #48A65B;
+    display: block;
+    margin:20px auto;
+    font-size: 20px;
+    text-align: center;
+    border: 1px  #000000;
+    padding: 14px 40px;
+    width: 200px;
+    outline: none;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+.box img {
+    width: 80%;
+}
+
