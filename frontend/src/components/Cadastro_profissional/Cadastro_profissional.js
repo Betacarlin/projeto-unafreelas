@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect}from 'react';
+import React ,{ useState}from 'react';
 import {NavLink,useHistory} from 'react-router-dom';
 import './Cadastro_profissional.css';
 import logo_cad from '../../imagens/logo_2.png';
@@ -7,16 +7,18 @@ import Axios from 'axios';
 
 
 
+
 function Cadastro_profissional() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [razao_social,setRazaoSocial] = useState("");
-  const [tipo_negocio,setTipoNeg] = useState("");
+  const [tipo_negocio,setTipoNegocio] = useState("");
   const [confirmSenha,setConfirmSenha] = useState("");
   const [isErr,setIsErr] = useState("");
   const history = useHistory();
 
+  
   const submitCad = () => {
     Axios.post('http://localhost:3333/usuario/cadastroprof',{
       nome : nome,
@@ -26,17 +28,19 @@ function Cadastro_profissional() {
       razao_social: razao_social,
       tipo_negocio: tipo_negocio
     }).then(() => {
-      alert ("Cadastro de clente realizado com sucesso")
+      alert ("Cadastro de cliente realizado com sucesso")
     })
-    history.push('/Login')
+    history.push('/Home_cliente')
   };
+
+
   
   const checkValidation = (e) =>{
     const confPass = e.target.value;
     setConfirmSenha(confPass);
-    if(senha != confPass){
+    if(senha !== confPass){
       setIsErr("Senhas não conferem!!");
-    }else if(senha == confPass | confPass == null){
+    }else if(senha === confPass | confPass == null){
       setIsErr("");
     }
   };
@@ -69,7 +73,12 @@ function Cadastro_profissional() {
             <input type="password" placeholder = "senha" value = {senha} onChange={e => setSenha(e.target.value)}/>
             <input type="password" placeholder = "confirmar senha" value = {confirmSenha} onChange={e => checkValidation(e)}/>
             <input type="text" placeholder = "Nome profissional" value = {razao_social} onChange={e => setRazaoSocial(e.target.value)}/>
-            <input type="text" placeholder = "Tipo do negocio" value = {tipo_negocio} onChange={e => setTipoNeg(e.target.value)}/>
+            <select className = "select_negocio" onChange = {(e)=> setTipoNegocio(e.target.value)}>
+              <option value = "Tecnologia">Tecnologia</option>
+              <option value = "Saude">Saúde</option>
+              <option value = "Direito">Direito</option>
+              <option value = "Engenharia">Engenharia</option>
+            </select>
             <button className="button_cadastrar" onClick = {submitCad}>Cadastrar</button>
             </form> 
         </div>

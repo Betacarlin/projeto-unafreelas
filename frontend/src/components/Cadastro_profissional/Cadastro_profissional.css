@@ -1,7 +1,7 @@
 body{
     margin: 0;
     padding: 0;
-    background-color: #bdc2be;
+    background-color: #b9b9b9af;
 }
 
 .box{
@@ -57,3 +57,24 @@ body{
     width: 80%;
 }
 
+.select_negocio{
+    border-radius: 24px;
+    font-size: 15px;
+    text-align:  center;
+    width: 200px;
+    outline: none;
+    border: 0;
+    -webkit-appearance: none; 
+    overflow:hidden;
+    padding: 7px;
+    background: url(http://www.webcis.com.br/images/imagens-noticias/select/ico-seta-appearance.gif) no-repeat #eeeeee;
+    background-position: 170px center;
+    cursor: pointer;
+}
+select option{
+    opacity: 0.5;
+}
+
+@media only screen and (max-device-width:700px){
+   /* .cadastro-container { width:600px; } */
+}

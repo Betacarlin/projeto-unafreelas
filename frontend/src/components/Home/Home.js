@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import back from '../../imagens/background_home.jpg';
 import './Home.css';
 import logo from '../../imagens/logo_2.png';
 function Home() {

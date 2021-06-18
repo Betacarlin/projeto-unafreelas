@@ -5,6 +5,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const rotaUsuario = require('./routes/usuario');
 const rotaCadastro = require('./routes/usuario');
+const rotaNegocio = require('./routes/tiponegocio');
+
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -12,6 +14,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use('/usuario',rotaUsuario);
 app.use ('/cadastro', rotaCadastro);
+app.use('/tiponegocio', rotaNegocio);
 
 app.use('/test',(req, res, next)=> {
     res.status(200).send({ 

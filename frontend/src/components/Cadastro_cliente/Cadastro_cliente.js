@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState} from 'react';
 import {NavLink,useHistory} from 'react-router-dom';
 import './Cadastro_cliente.css';
 import logo_cad from '../../imagens/logo_2.png';
@@ -33,9 +33,9 @@ function Cadastro_cliente() {
     const checkValidation = (e) =>{
       const confPass = e.target.value;
       setConfirmSenha(confPass);
-      if(senha != confPass){
+      if(senha !== confPass){
         setIsErr("Senhas não conferem!!");
-      }else if(senha == confPass | confPass == null){
+      }else if(senha === confPass | confPass == null){
         setIsErr("");
       }
     };
