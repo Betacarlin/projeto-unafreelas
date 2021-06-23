@@ -85,30 +85,38 @@ module.exports = {
 
         return response.json(users);
     },
-    async create(request, response, ) {
+    async create(request, response) {
 
-        const { nome_projeto, descricao,id_profissional,data_soli,status_projeto } = request.body;
-        const id_solicitante = request.headers.authorization;
+        const { nome_projeto,id_solicitante,id_profissional,data_soli,status_projeto,descricao } = request.body;
+        const id_solici = request.headers.authorization;
 
             const [id] = await connection('projeto').insert({
-                nome_projeto, descricao, id_solicitante,id_profissional,data_soli,status_projeto
+                nome_projeto,id_solicitante,id_profissional,data_soli,status_projeto,descricao
             });
 
             return response.json({ id }); 
     },
     async delete(request, response) {
         const { id } = request.params;
-        const ong_id = request.headers.authorization;
+        const id_profissional = request.headers.authorization;
 
-        const post = await connection('posts').where('id', id).select('ong_id').first();
+        const post = await connection('projeto').where('id_post', id).select('id_profissional').first();
 
-        if (post.ong_id != ong_id) {
+        if (post.id_profissional != id_profissional) {
             return response.status(401).json({ error: 'Operação não permitida !' });
         }
 
-        await connection('posts').where('id', id).delete();
+        await connection('projeto').where('id_post', id).delete();
 
         return response.status(204).send();
+    },
+
+    async update(request,response){
+       const { id } = request.params;
+     
+       await connection ('projeto').where('id_post',id).update({status_projeto:'em andamento'});
+
+       return response.status(204).send();
     }
 };
 

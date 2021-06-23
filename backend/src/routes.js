@@ -44,7 +44,7 @@ routes.get('/projetos/andamentosoli', ProjetoController.getAllProjetosEmAndament
 routes.get('/projetos/usuariotipo', ProjetoController.getAllUsuarioFiltroTipoNegocio);  
 routes.post('/projetos', ProjetoController.create);
 routes.delete('/projetos/:id', ProjetoController.delete);
-
+routes.put('/projetos/:id',ProjetoController.update);
 routes.get('/profile', ProfileController.getAllPostsByOng);
 
 routes.get('/null',

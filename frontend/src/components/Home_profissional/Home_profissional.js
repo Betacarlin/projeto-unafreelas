@@ -38,6 +38,35 @@ function Home_profissional() {
 
     console.log('id é',projetosPen)
 
+    async function deletePost(id_post) {
+        try {
+            await api.delete(`projetos/${id_post}`, {
+                headers: {
+                    Authorization: id_profissional,
+                }
+            });
+            alert('Post deletado com sucesso !');
+            window.location.reload();
+        } catch (err) {
+            alert('Você não tem permissão para deletar esta postagem \n \n' + err);
+        }
+    };
+
+    async function updatePost(id_post) {
+        try {
+            await api.put(`projetos/${id_post}`,
+            {
+                headers: {
+                    Authorization: id_profissional,
+                }
+            });
+            alert('Post alterado com sucesso !');
+            window.location.reload();
+        } catch (err) {
+            alert('Você não tem permissão para alterar esta postagem \n \n' + err);
+        }
+    };
+
     function logOut(){
         localStorage.clear();
         history.push('/');
@@ -83,7 +112,8 @@ function Home_profissional() {
                           <p>{pjen.data_soli}</p>
 
                           <p>{pjen.nome}</p>
-
+                          <button type = "button" onClick = {() => {updatePost(pjen.id_post)}}>Aceitar</button>
+                          <button type = "button" onClick = {() => {deletePost(pjen.id_post)}}>Rejeitar</button>
                        </li>
                 ))}
             </ul>
