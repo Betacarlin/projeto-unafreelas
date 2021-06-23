@@ -3,7 +3,7 @@ import {NavLink,useHistory} from 'react-router-dom';
 import './Cadastro_cliente.css';
 import logo_cad from '../../imagens/logo_2.png';
 import {Card,Nav} from 'react-bootstrap';
-import Axios from 'axios';
+import api from '../../service/api';
 
 
 
@@ -19,23 +19,23 @@ function Cadastro_cliente() {
     
     
     const submitCad = () => {
-      Axios.post('http://localhost:3333/usuario',{
+      api.post('usuarios',{
         nome : nome,
         email: email,
         senha : senha,
         tipo_usuario: 0
       }).then(() => {
-        alert ("Cadastro de clente realizado com sucesso")
+        alert ("Cadastro de cliente realizado com sucesso")
       })
-      history.push('/Login')
+      history.push('/Home_cliente')
     };
 
     const checkValidation = (e) =>{
       const confPass = e.target.value;
       setConfirmSenha(confPass);
-      if(senha !== confPass){
+      if(senha != confPass){
         setIsErr("Senhas não conferem!!");
-      }else if(senha === confPass | confPass == null){
+      }else if(senha == confPass | confPass == null){
         setIsErr("");
       }
     };
@@ -49,10 +49,10 @@ function Cadastro_cliente() {
   <Card.Header>
     <Nav variant="pills" defaultActiveKey="#first">
       <Nav.Item>
-        <Nav.Link href="#first">Cliente</Nav.Link>
+        <NavLink to="#first">Cliente</NavLink>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/Cadastro_profissional">Profissional</Nav.Link>
+        <NavLink to="/Cadastro_profissional">Profissional</NavLink>
       </Nav.Item>
     </Nav>
   </Card.Header>

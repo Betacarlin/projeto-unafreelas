@@ -5,26 +5,38 @@ import lupa from '../../imagens/lupa.png';
 import {useHistory,NavLink} from 'react-router-dom';
 import api from '../../service/api';
 
-function Home_cliente() {
+function Home_profissional() {
     const nome = localStorage.getItem('Nome');
-    const id_solicitante = localStorage.getItem('Id');
+    const id_profissional = localStorage.getItem('Id');
     const history = useHistory();
-    const [projetos, setProjetos] = useState([]);
+    const [projetosAnd, setProjetosAnd] = useState([]);
+    const [projetosPen, setProjetosPen] = useState([]);
     const [filtro, setFiltro] = useState('') ;
     localStorage.setItem('Filtro', filtro);
 
     useEffect(() => {
-        api.get(`projetos/andamentosoli?id_solicitante=${id_solicitante}`, { 
+        api.get(`/projetos/andamento?id_profissional=${id_profissional}`, { 
             headers: {
-                Authorization: id_solicitante,
+                Authorization: id_profissional,
             }
         }).then(response => {
-            setProjetos(response.data);
+            setProjetosAnd(response.data);
 
         })
-    }, [id_solicitante]);
+    }, [id_profissional]);
 
-    console.log('id é',projetos)
+    useEffect(() => {
+        api.get(`/projetos/pendente?id_profissional=${id_profissional}`, { 
+            headers: {
+                Authorization: id_profissional,
+            }
+        }).then(response => {
+            setProjetosPen(response.data);
+
+        })
+    }, [id_profissional]);
+
+    console.log('id é',projetosPen)
 
     function logOut(){
         localStorage.clear();
@@ -47,7 +59,7 @@ function Home_cliente() {
             <ul> 
 
                 <p>Projetos solicitados em andamento</p>
-                {projetos.map(pj => (
+                {projetosAnd.map(pj => (
                        <li key = {pj.id_post}>
 
                           <p>{pj.nome_projeto}</p>
@@ -59,8 +71,24 @@ function Home_cliente() {
                        </li>
                 ))}
             </ul>
+
+            <ul> 
+
+                <p>Projetos solicitados pendentes</p>
+                {projetosPen.map(pjen => (
+                       <li key = {pjen.id_post}>
+
+                          <p>{pjen.nome_projeto}</p>
+
+                          <p>{pjen.data_soli}</p>
+
+                          <p>{pjen.nome}</p>
+
+                       </li>
+                ))}
+            </ul>
         </div>
     )
 }
 
-export default Home_cliente
+export default Home_profissional

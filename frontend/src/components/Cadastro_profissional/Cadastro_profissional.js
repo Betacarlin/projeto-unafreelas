@@ -3,7 +3,7 @@ import {NavLink,useHistory} from 'react-router-dom';
 import './Cadastro_profissional.css';
 import logo_cad from '../../imagens/logo_2.png';
 import {Card,Nav} from 'react-bootstrap';
-import Axios from 'axios';
+import api from '../../service/api';
 
 
 
@@ -20,7 +20,7 @@ function Cadastro_profissional() {
 
   
   const submitCad = () => {
-    Axios.post('http://localhost:3333/usuario/cadastroprof',{
+    api.post('usuarios',{
       nome : nome,
       email: email,
       senha : senha,
@@ -30,17 +30,15 @@ function Cadastro_profissional() {
     }).then(() => {
       alert ("Cadastro de cliente realizado com sucesso")
     })
-    history.push('/Home_cliente')
+    history.push('/Home_profissional')
   };
 
-
-  
   const checkValidation = (e) =>{
     const confPass = e.target.value;
     setConfirmSenha(confPass);
-    if(senha !== confPass){
+    if(senha != confPass){
       setIsErr("Senhas não conferem!!");
-    }else if(senha === confPass | confPass == null){
+    }else if(senha == confPass | confPass == null){
       setIsErr("");
     }
   };
@@ -53,10 +51,10 @@ function Cadastro_profissional() {
   <Card.Header>
     <Nav variant="pills" defaultActiveKey="#first">
       <Nav.Item>
-        <Nav.Link href="/Cadastro_cliente">Cliente</Nav.Link>
+        <NavLink to="/Cadastro_cliente">Cliente</NavLink>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/Cadastro_profissional">Profissional</Nav.Link>
+        <NavLink to="/Cadastro_profissional">Profissional</NavLink>
       </Nav.Item>
     </Nav>
   </Card.Header>
@@ -72,7 +70,7 @@ function Cadastro_profissional() {
             <input type="text" placeholder = "e-mail" value = {email} onChange={e => setEmail(e.target.value)}/>
             <input type="password" placeholder = "senha" value = {senha} onChange={e => setSenha(e.target.value)}/>
             <input type="password" placeholder = "confirmar senha" value = {confirmSenha} onChange={e => checkValidation(e)}/>
-            <input type="text" placeholder = "Nome profissional" value = {razao_social} onChange={e => setRazaoSocial(e.target.value)}/>
+            <input type="text" placeholder = "Razão Social" value = {razao_social} onChange={e => setRazaoSocial(e.target.value)}/>
             <select className = "select_negocio" onChange = {(e)=> setTipoNegocio(e.target.value)}>
               <option value = "Tecnologia">Tecnologia</option>
               <option value = "Saude">Saúde</option>

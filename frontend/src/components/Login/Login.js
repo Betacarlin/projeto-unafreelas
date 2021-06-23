@@ -8,27 +8,33 @@ function Login() {
 
     const [email, setEmail] = useState("");
     const [senha,setSenha] = useState("");
+    const history = useHistory();
 
 
     async function LoginUser(e) {
         e.preventDefault();
 
         try{
-        const res = await api.post('http://localhost:3333/usuario/login',{
+        const res = await api.post('sessions',{
           email: email,
           senha : senha
-        }).then(() => {
-          alert ("Chegou no THEN");
-          
-          localStorage.setItem ('tipoUser', res.data.tipo_usuario);
-          localStorage.setItem('tipoNome', res.data.nome);
-          localStorage.setItem('tipoEmail', res.data.email);
-        })
+        });
+          localStorage.setItem ('tipo_usuario', res.data.tipo_usuario);
+          localStorage.setItem('Nome', res.data.nome);
+          localStorage.setItem('Email', res.data.email);
+          localStorage.setItem('Id', res.data.id);
+
+          if(localStorage.getItem('tipo_usuario')==0){
+            history.push('/Home_cliente')
+          } else{
+            history.push('/Home_profissional')
+          }
+
         } catch(err){
-            alert('ERRO DE ALGUMA COISA CAIU NO CATCH')
+            alert("Não foi possível realizar login");
+            console.log(err);
         }
 
-        //history.push('/Login')
     };
 
   
@@ -41,7 +47,7 @@ function Login() {
             </NavLink>
             <input type="text" placeholder = "e-mail" value = {email} onChange={e => setEmail(e.target.value)}/>
             <input type="password" placeholder = "senha" value = {senha} onChange={e => setSenha(e.target.value)}/>
-            <button className="button_logar" onClick = {() => LoginUser} >Logar</button>
+            <button className="button_logar" onClick = {LoginUser} >Logar</button>
             </form> 
         </div>
     )
