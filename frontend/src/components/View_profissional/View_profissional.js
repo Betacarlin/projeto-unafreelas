@@ -20,6 +20,7 @@ function View_profissional() {
     const [buttonPopup,setButtonPopup] = useState(false);
     const [projetosAnd, setProjetosAnd] = useState([]);
     const [projetosPen, setProjetosPen] = useState([]);
+    const [usuario, setUsuario] = useState([]);
     const [filtro, setFiltro] = useState('');
     const [titulo, setTitulo] = useState('');
     const [descricao,setDescricao] = useState('');
@@ -46,6 +47,17 @@ function View_profissional() {
 
         })
     }, [viewid]);
+
+    useEffect(()=>{
+        api.get(`usuarios/imagem?id=${viewid}`,{
+            headers: {
+                Authorization: viewid,
+            }
+        }).then(response =>{
+            setUsuario(response.data)
+        })
+
+    },[viewid]);
 
     console.log('id é',descricao);
 
@@ -94,6 +106,11 @@ function View_profissional() {
                     <button type = "button" onClick = {logOut}>Sair</button>
                 </div>
             </header>
+            {usuario.map(us =>(
+                        <li key = {us.id}>
+                        <img src={`http://localhost:3333/${us.imagem}`} alt="img" />
+                    </li>
+                    ))}
             <span>{viewnome}</span>
             <div>
             <button onClick = {() => setButtonPopup(true)}>Novo chamado</button>

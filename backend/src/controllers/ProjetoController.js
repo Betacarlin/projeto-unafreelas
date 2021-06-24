@@ -52,7 +52,7 @@ module.exports = {
         const projeto = connection('projeto');
 
             projeto
-                .select('usuario.nome','projeto.nome_projeto','projeto.data_soli','projeto.id_post').from('usuario')
+                .select('usuario.nome','projeto.nome_projeto','projeto.data_soli','projeto.id_post','projeto.descricao').from('usuario')
                 .join('projeto', 'usuario.id', 'projeto.id_profissional')
                 .where({ id_solicitante: id_solicitante, status_projeto:'em andamento' })
                 .limit(4)
@@ -66,13 +66,13 @@ module.exports = {
         return response.json(postagens);
     },
     async getAllUsuarioFiltroTipoNegocio(request, response) {
-        const { page = 1, tipo_negocio= '' } = request.query;   //recuperar projetos do profissional em andamento
+        const { page = 1, tipo_negocio= '' } = request.query;   //recuperar projetos do profissional filtro
         const [count] = await connection('usuario').count();
 
         const user = connection('usuario')    
 
         user
-            .select('usuario.nome','usuario.email','usuario.id','usuario.razao_social','usuario.tipo_negocio').from('usuario')
+            .select('usuario.nome','usuario.email','usuario.id','usuario.razao_social','usuario.tipo_negocio','usuario.imagem').from('usuario')
             .where({ tipo_negocio:tipo_negocio })
             .limit(6)
             .offset((page - 1) * 6)
@@ -85,6 +85,8 @@ module.exports = {
 
         return response.json(users);
     },
+     
+
     async create(request, response) {
 
         const { nome_projeto,id_solicitante,id_profissional,data_soli,status_projeto,descricao } = request.body;

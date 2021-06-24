@@ -37,6 +37,8 @@ routes.post('/sessions', SessionController.create);
 
 routes.get('/usuarios', UsuarioController.getAllUsers);
 routes.post('/usuarios', UsuarioController.create);
+routes.patch('/usuarios/imagem/:id',upload.single("imagem"),UsuarioController.createImagem);
+routes.get('/usuarios/imagem',UsuarioController.viewImagem);
 
 routes.get('/projetos/pendente', ProjetoController.getAllProjetosPendentes);
 routes.get('/projetos/andamento', ProjetoController.getAllProjetosEmAndamento);

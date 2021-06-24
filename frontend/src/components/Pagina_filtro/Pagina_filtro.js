@@ -40,7 +40,9 @@ function Pagina_filtro() {
                     <NavLink to = '/Pagina_filtro'>
                         <img id = 'lupa' src={lupa} alt = 'lupa'/>
                     </NavLink>
-                    <span>{nome}</span>
+                    <NavLink to = '/Home_cliente'>
+                      <span>{nome}</span>
+                    </NavLink>
                     <button type = "button" onClick = {logOut}>Sair</button>
                 </div>
             </header>
@@ -48,7 +50,10 @@ function Pagina_filtro() {
 
                 {user.map(us => (
                        <li key = {us.id}>
-
+                             
+                            <a href={`http://localhost:3333/${us.imagem}`} rel="noopener noreferrer" target="_blank">
+                                <img src={`http://localhost:3333/${us.imagem}`} alt="img" />
+                            </a>
                           <p>{us.nome}</p>
 
                           <p>{us.razao_social}</p>
