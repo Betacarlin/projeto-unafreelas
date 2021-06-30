@@ -55,8 +55,8 @@ module.exports = {
                 .select('usuario.nome','projeto.nome_projeto','projeto.data_soli','projeto.id_post','projeto.descricao').from('usuario')
                 .join('projeto', 'usuario.id', 'projeto.id_profissional')
                 .where({ id_solicitante: id_solicitante, status_projeto:'em andamento' })
-                .limit(4)
-                .offset((page - 1) * 4)
+                .limit(6)
+                .offset((page - 1) * 6)
                 .orderBy('projeto.id_post', "desc");
 
             response.header('X-Total-Count', count['count(*)'])

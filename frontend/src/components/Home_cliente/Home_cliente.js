@@ -1,9 +1,11 @@
 import React,{useState,useEffect} from 'react';
 import logo from '../../imagens/logo_2.png';
-import icon_1 from '../../imagens/icon_andamento.png';
+import icon from '../../imagens/icon_andamento.png';
 import lupa from '../../imagens/lupa.png';
 import {useHistory,NavLink} from 'react-router-dom';
 import api from '../../service/api';
+import './Home_cliente.css';
+import Modal from '../Popup_view/Popup_view';
 
 function Home_cliente() {
     const nome = localStorage.getItem('Nome');
@@ -15,6 +17,7 @@ function Home_cliente() {
     const [imagem, setImagem] = useState({ file: null });
     const [filtro, setFiltro] = useState('') ;
     localStorage.setItem('Filtro', filtro);
+    const [buttonPopup,setButtonPopup] = useState(false);
 
     useEffect(() => {
         api.get(`projetos/andamentosoli?id_solicitante=${id_solicitante}`, { 
@@ -62,7 +65,7 @@ function Home_cliente() {
              alert('Imagem de perfil alterada, com sucerro');
              window.location.reload();
             }catch(err){
-                alert('Você não tem permissão para alterar esta postagem \n \n' + err);
+                alert('Arquivos com extensão somente jpg, png e jpeg!\n \n' + err);
              }
     };
 
@@ -77,7 +80,7 @@ function Home_cliente() {
             }
         }).then(response => {
             if (response.data < [1]) {
-                alert("Não há mais registros !");
+                alert("Não há mais registros!");
                 setPage(page -= 1);
             }
             else {
@@ -90,7 +93,7 @@ function Home_cliente() {
     function previousPage() {
 
         if (page === 1) {
-            return alert("Esta é a página inicial !");
+            return alert("Esta é a página inicial!");
         }
         setPage(page -= 1);
         api.get(`projetos/andamentosoli?page=${page}&id_solicitante=${id_solicitante}`, {
@@ -109,52 +112,72 @@ function Home_cliente() {
     }
 
     return (
-        <div >
-            <header>
-                <div className = 'header-home'>
+        <div className = "home-container">
+            <header> 
+                    
                     <img id = 'logo' src={logo} alt = 'logo'/>
-                    <input type = 'text' onChange={e => setFiltro(e.target.value)}/>
-                    <NavLink to = '/Pagina_filtro'>
-                        <img id = 'lupa' src={lupa} alt = 'lupa'/>
-                    </NavLink>
+                    <div className = "search-box">
+                        <input type = 'text' onChange={e => setFiltro(e.target.value)}/>
+                        <NavLink to = '/Pagina_filtro'>
+                            <img id = 'lupa' src={lupa} alt = 'lupa'/>
+                        </NavLink>
+                    </div>
                     {usuario.map(us =>(
                         <li key = {us.id}>
-                        <img src={`http://localhost:3333/${us.imagem}`} alt="img" />
+                        <img src={`http://localhost:3333/${us.imagem}`} alt="img-header" id = "imgheader" />
                     </li>
                     ))}
                     
                     <span>{nome}</span>
                     <button type = "button" onClick = {logOut}>Sair</button>
-                </div>
             </header>
-            <form encType="multipart/form-data" onSubmit={() => {uploadImagem(id_solicitante)}}>
-                <input
+            <div className = "perfil-container">
+            <button onClick = {() => setButtonPopup(true)}>Editar perfil</button>  
+                {usuario.map(us =>(
+                        <li key = {us.id}>
+                        <img src={`http://localhost:3333/${us.imagem}`} alt="img-header" id = "imgheader" />
+                    </li>
+                    ))}
+                <span>{nome}</span>
+            </div>
+            {buttonPopup ? (
+                <Modal onClose = {() =>setButtonPopup(false)}>
+                    <form encType="multipart/form-data" onSubmit={() => {uploadImagem(id_solicitante)}}>
+                    <input
                         type="file"
                         name="imagem"
                         onChange={(e) => input(e)}
                     />
-                 <button type = "submit" >ok</button>
-             </form>
-                <span>{nome}</span>
+                    <button type = "submit" >ok</button>
+                </form>
+                </Modal>
+            ):null}     
+            <div className = "call-container">
             <ul> 
-
-                <p>Projetos solicitados em andamento</p>
+                <div className = "titulo">
+                <img id = 'icon' src={icon} alt = 'icon'/>
+                <h1>Projetos em andamento</h1>
+                </div>
+                
                 {projetos.map(pj => (
-                       <li key = {pj.id_post}>
+                    <li key = {pj.id_post}>
+                          
+                       <p1>{pj.nome_projeto}</p1>
 
-                          <p>{pj.nome_projeto}</p>
+                       <p2>{pj.data_soli}</p2>
 
-                          <p>{pj.data_soli}</p>
-
-                          <p>{pj.nome}</p>
-                        
-                       </li>
+                       <p3>{pj.nome}</p3>
+                     
+                    </li>
                 ))}
+
+                <div className="paginacao">
+                    <button type="button" onClick={previousPage}>Anterior</button>
+                    <button type="button" onClick={nextPage}>Próxima</button>
+                </div>    
             </ul>
-            <div className="paginacao">
-                <button type="button" onClick={previousPage}>Anterior</button>
-                <button type="button" onClick={nextPage}>Próxima</button>
             </div>
+            
         </div>
     )
 }
