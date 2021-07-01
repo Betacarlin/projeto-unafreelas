@@ -18,3 +18,23 @@
     height: 60%;
     border-radius: 20px;
 }
+
+.close{
+    width: 100vw;
+    max-width: 60px;
+    border-radius: 20px;
+    margin-top: 5px;
+    margin-left: 710px;
+    text-align: center;
+    outline: none;
+    border: none;
+    background: none;
+    color: rgb(64, 74, 148);
+
+    cursor: pointer;
+
+}
+
+.close:hover{
+    opacity: 0.8;
+}

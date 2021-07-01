@@ -15,7 +15,6 @@
     background: none;
     padding: 5px 10px;
     outline:none;
-    border: none;
     border-radius: 24px;
     cursor: pointer;
     background-color:transparent;
@@ -202,7 +201,7 @@
     background: #161659cd;
     border: 0;
     border-radius: 8px;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-weight: 700;
     margin-top: 16px; 
     margin-left: 6px;

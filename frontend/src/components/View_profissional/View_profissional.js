@@ -1,10 +1,12 @@
 import React,{useState,useEffect} from 'react';
 import logo from '../../imagens/logo_2.png';
-import icon_1 from '../../imagens/icon_andamento.png';
+import icon from '../../imagens/icon_andamento.png';
+import icoon from '../../imagens/icon_pendentes.png';
 import lupa from '../../imagens/lupa.png';
 import Modal from '../Popup_view/Popup_view';
 import {useHistory,NavLink} from 'react-router-dom';
 import api from '../../service/api';
+import './View_profissional.css';
 
 function View_profissional() {
     const viewnome = localStorage.getItem('Nomeview');
@@ -21,6 +23,7 @@ function View_profissional() {
     const [projetosAnd, setProjetosAnd] = useState([]);
     const [projetosPen, setProjetosPen] = useState([]);
     const [usuario, setUsuario] = useState([]);
+    const [userImg,setUserImg] = useState([]);
     const [filtro, setFiltro] = useState('');
     const [titulo, setTitulo] = useState('');
     const [descricao,setDescricao] = useState('');
@@ -59,6 +62,18 @@ function View_profissional() {
 
     },[viewid]);
 
+    useEffect(()=>{
+        api.get(`usuarios/imagem?id=${id_solicitante}`,{
+            headers: {
+                Authorization: id_solicitante,
+            }
+        }).then(response =>{
+            setUserImg(response.data)
+        })
+
+    },[id_solicitante]);
+
+
     console.log('id é',descricao);
 
     async function novoProjeto(e){
@@ -91,74 +106,92 @@ function View_profissional() {
     }
     
     return (
-        <div >
+        <div className = "view-container">
             
             <header>
-                <div className = 'header-home'>
                     <img id = 'logo' src={logo} alt = 'logo'/>
+                    <div className = "search-box">
                     <input type = 'text' onChange={e => setFiltro(e.target.value)}/>
                     <NavLink to = '/Pagina_filtro'>
                         <img id = 'lupa' src={lupa} alt = 'lupa'/>
                     </NavLink>
+                    </div>
+                    {userImg.map(user =>(
+                        <li key = {user.id}>
+                        <img src={`http://localhost:3333/${user.imagem}`} alt="img" />
+                    </li>
+                    ))}
                     <NavLink to = '/Home_cliente'>
                         <span>{nomesoli}</span>
                     </NavLink>
                     <button type = "button" onClick = {logOut}>Sair</button>
-                </div>
+                    
             </header>
+            <div className = "perfil-container2">
             {usuario.map(us =>(
                         <li key = {us.id}>
                         <img src={`http://localhost:3333/${us.imagem}`} alt="img" />
                     </li>
                     ))}
             <span>{viewnome}</span>
-            <div>
-            <button onClick = {() => setButtonPopup(true)}>Novo chamado</button>
+            </div>
+            <div className = "butao">
+                <button onClick = {() => setButtonPopup(true)}>Novo chamado</button>
+            </div>
              {buttonPopup ? (
               <Modal onClose = {() =>setButtonPopup(false)}>
-                 <strong>Titulo</strong>
-                 <input type = "text" value = {titulo} onChange={e => setTitulo(e.target.value)}/>
-                 <strong>Descrição</strong>
-                 <textarea maxLength="255"
-                    placeholder="Descreva em no máximo 255 caracteres"
-                    value={descricao}
-                    onChange={e => setDescricao(e.target.value)}
-                 />
-                 <button className = "button_submit" onClick = {novoProjeto}>Solicitar</button>
+                  <div className = "form">
+                    <strong>Titulo</strong>
+                    <input type = "text" value = {titulo} onChange={e => setTitulo(e.target.value)}/>
+                    <strong className = "desc">Descrição</strong>
+                    <textarea maxLength="255"
+                        placeholder="Descreva em no máximo 255 caracteres"
+                        value={descricao}
+                        onChange={e => setDescricao(e.target.value)}
+                    />
+                    <button className = "button_submit" onClick = {novoProjeto}>Solicitar</button>
+                  </div>
               </Modal>
               ) : null}
-             </div>
+             <div className = "call-container-andamento-view">
             <ul> 
-
-                <p>Projetos solicitados em andamento</p>
+                <div className = "titulo">
+                    <img id = 'icon' src={icon} alt = 'icon'/>
+                    <h1>Projetos em andamento</h1>
+                </div>
                 {projetosAnd.map(pj => (
                        <li key = {pj.id_post}>
 
-                          <p>{pj.nome_projeto}</p>
+                          <p1>{pj.nome_projeto}</p1>
 
-                          <p>{pj.data_soli}</p>
+                          <p2>{pj.data_soli}</p2>
 
-                          <p>{pj.nome}</p>
+                          <p3>{pj.nome}</p3>
                          
                        </li>
                 ))}
             </ul>
+            </div>
+            <div className = "call-container-pendentes-view">
+                <ul> 
 
-            <ul> 
-
-                <p>Projetos solicitados pendentes</p>
-                {projetosPen.map(pjen => (
+                <div className = "titulo">
+                    <img id = 'icoon' src={icoon} alt = 'icoon'/>
+                    <h1>Propostas de projeto</h1>
+                </div>
+                    {projetosPen.map(pjen => (
                        <li key = {pjen.id_post}>
 
-                          <p>{pjen.nome_projeto}</p>
+                          <p4>{pjen.nome_projeto}</p4>
 
-                          <p>{pjen.data_soli}</p>
+                          <p5>{pjen.data_soli}</p5>
 
-                          <p>{pjen.nome}</p>
+                          <p6>{pjen.nome}</p6>
 
                        </li>
-                ))}
-            </ul>
+                    ))}
+                </ul>
+            </div>
         </div>
     )
 }

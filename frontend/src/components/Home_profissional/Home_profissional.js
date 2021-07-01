@@ -1,9 +1,12 @@
 import React,{useState,useEffect} from 'react';
 import logo from '../../imagens/logo_2.png';
-import icon_1 from '../../imagens/icon_andamento.png';
+import icon from '../../imagens/icon_andamento.png';
+import icoon from '../../imagens/icon_pendentes.png';
 import lupa from '../../imagens/lupa.png';
 import {useHistory,NavLink} from 'react-router-dom';
 import api from '../../service/api';
+import './Home_profissional.css';
+import Modal from '../Popup_view/Popup_view';
 
 function Home_profissional() {
     const nome = localStorage.getItem('Nome');
@@ -16,6 +19,7 @@ function Home_profissional() {
     const [imagem, setImagem] = useState({ file: null });
     const [filtro, setFiltro] = useState('') ;
     localStorage.setItem('Filtro', filtro);
+    const [buttonPopup,setButtonPopup] = useState(false);
 
     useEffect(() => {
         api.get(`/projetos/andamento?id_profissional=${id_profissional}`, { 
@@ -78,7 +82,7 @@ function Home_profissional() {
             }
    };
 
-    console.log('id é',projetosPen)
+    //console.log('id é',projetosPen)
      
 
     async function deletePost(id_post) {
@@ -186,76 +190,101 @@ function Home_profissional() {
     }
 
     return (
-        <div >
+        <div className = "home-container">
             <header>
-                <div className = 'header-home'>
-                    <NavLink to = '/'>
                     <img id = 'logo' src={logo} alt = 'logo'/>
-                    </NavLink>
+                    <div className = "search-box">
                     <input type = 'text' onChange={e => setFiltro(e.target.value)}/>
                     <NavLink to = '/Pagina_filtro'>
                         <img id = 'lupa' src={lupa} alt = 'lupa'/>
                     </NavLink>
-                    <NavLink to = '/Home_profissional'>
+                    </div>
+                    {usuario.map(us =>(
+                        <li key = {us.id}>
+                        <img src={`http://localhost:3333/${us.imagem}`} alt="img-header" id = "imgheader" />
+                    </li>
+                    ))}
                     <span>{nome}</span>
-                    </NavLink>
                     <button type = "button" onClick = {logOut}>Sair</button>
-                </div>
+                
             </header>
-                <form encType="multipart/form-data" onSubmit={() => {uploadImagem(id_profissional)}}>
-                <input
+            <div className = "perfil-container1">
+            <button onClick = {() => setButtonPopup(true)}>Editar perfil</button>  
+                {usuario.map(us =>(
+                        <li key = {us.id}>
+                        <img src={`http://localhost:3333/${us.imagem}`} alt="img-header" id = "imgheader" />
+                    </li>
+                    ))}
+                <span>{nome}</span>
+            </div>
+            {buttonPopup ? (
+                <Modal onClose = {() =>setButtonPopup(false)}>
+                    <form encType="multipart/form-data" onSubmit={() => {uploadImagem(id_profissional)}}>
+                    <input
                         type="file"
                         name="imagem"
                         onChange={(e) => input(e)}
                     />
-                 <button type = "submit" >ok</button>
-                 </form>
-                    {usuario.map(us =>(
-                        <li key = {us.id}>
-                        <img src={`http://localhost:3333/${us.imagem}`} alt="img" />
-                    </li>
-                    ))}
-                <span>{nome}</span>
+                    <button type = "submit" >ok</button>
+                </form>
+                </Modal>
+            ):null}  
+            <div className = "call-container-andamento">
             <ul> 
-
-                <p>Projetos solicitados em andamento</p>
+                <div className = "titulo">
+                    <img id = 'icon' src={icon} alt = 'icon'/>
+                    <h1>Projetos em andamento</h1>
+                </div>
                 {projetosAnd.map(pj => (
                        <li key = {pj.id_post}>
 
-                          <p>{pj.nome_projeto}</p>
+                          <p1>{pj.nome_projeto}</p1>
 
-                          <p>{pj.data_soli}</p>
+                          <p2>{pj.data_soli}</p2>
 
-                          <p>{pj.nome}</p>
+                          <p3>{pj.nome}</p3>
 
                        </li>
                 ))}
-            </ul>
             <div className="paginacao">
                 <button type="button" onClick={previousPageAnd}>Anterior</button>
                 <button type="button" onClick={nextPageAnd}>Próxima</button>
             </div>
+                
+            </ul>
+            </div>
+            
+            <div className = "call-container-pendentes">
+                <ul> 
 
-            <ul> 
-
-                <p>Projetos solicitados pendentes</p>
+                <div className = "titulo">
+                    <img id = 'icoon' src={icoon} alt = 'icoon'/>
+                    <h1>Propostas de projeto</h1>
+                    </div>
                 {projetosPen.map(pjen => (
                        <li key = {pjen.id_post}>
 
-                          <p>{pjen.nome_projeto}</p>
+                          <p4>{pjen.nome_projeto}</p4>
 
-                          <p>{pjen.data_soli}</p>
+                          <p5>{pjen.data_soli}</p5>
 
-                          <p>{pjen.nome}</p>
-                          <button type = "button" onClick = {() => {updatePost(pjen.id_post)}}>Aceitar</button>
-                          <button type = "button" onClick = {() => {deletePost(pjen.id_post)}}>Rejeitar</button>
+                          <p6>{pjen.nome}</p6>
+                          <div className="butao-submit">
+                              <div className = "Aceitar">
+                                <button type = "button" onClick = {() => {updatePost(pjen.id_post)}}>Aceitar</button>
+                              </div>
+                              <div><button type = "button" onClick = {() => {deletePost(pjen.id_post)}}>Rejeitar</button></div>
+                         </div> 
                        </li>
                 ))}
-            </ul>
-            <div className="paginacao">
-                <button type="button" onClick={previousPagePen}>Anterior</button>
-                <button type="button" onClick={nextPagePen}>Próxima</button>
+                    <div className="paginacao">
+                        <button type="button" onClick={previousPagePen}>Anterior</button>
+                        <button type="button" onClick={nextPagePen}>Próxima</button>
+                    </div>
+                </ul>
             </div>
+            
+            
               
         </div>
     )

@@ -1,0 +1,177 @@
+.filtro-container{
+    width: 100vw;
+    max-width: 1360px;
+}
+
+.filtro-container header{
+    display: flex;
+    align-items: center;
+    background-color:#172f54de;
+    z-index: 10;
+}
+
+
+.filtro-container header button{
+    background: none;
+    padding: 5px 10px;
+    outline:none;
+    border-radius: 24px;
+    cursor: pointer;
+    background-color:transparent;
+    border: 1px solid;
+    transition: all 0.3s ease-out;
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+    color: white;
+}
+
+.filtro-container header button:hover{
+    background-color:red;
+}
+
+.filtro-container header span{
+    position: absolute;
+    right: 0;
+    margin-right: 95px;
+    color: white;
+    top: 6%;
+}
+
+.filtro-container header li{
+    position: absolute;
+    right: 0;
+    margin-right: 110px;
+    list-style: none;
+}
+
+.filtro-container header li img{
+    width: 100%;
+    max-width: 60px;
+    height: 60px;
+    max-height: 100%;
+    margin-right: 50px;
+    border-radius: 28px;
+}
+
+.search-box input {
+    border-radius: 24px;
+    outline: none;
+    border: 1px  #000000;
+    text-align: center;
+    font-size: 15px;
+    width: 200px;
+    height: 20px;
+    margin-left: 160px;
+    margin-top: 5px;
+}
+
+.filtro-container header div img{
+    position: absolute;
+    left: 0;
+    margin-left: 790px;
+}
+
+.filtro-container img logo{
+    width: 100%;
+    height: 100%;
+    max-width: 30px;
+}
+
+.body-filtro{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.body-filtro ul li {
+    list-style: none;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.body-filtro ul li img{
+    width: 100vw;
+    height: 100vh;
+    max-width: 90px;
+    max-height: 90px;
+    border-radius: 200px;
+    margin-left: 10px;
+}
+
+.perfil-filtro{
+    display: flex;
+    align-items: center;
+    background-color: rgba(177, 167, 167, 0.241);
+    width: 100vw;
+    max-width: 880px;
+    max-height: 400px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.perfil-filtro p1{
+    margin-left: 10px;
+}
+
+.perfil-filtro p2{
+ position: absolute;
+ justify-content: center;
+ right: 60%;
+}
+
+.perfil-filtro p3{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    right: 40%;
+}
+
+.perfil-filtro button{
+    border-radius: 20px;
+    text-align: center;
+    outline: none;
+    border: none;
+    background: none;
+    font-size: 15px;
+    width: 105px;
+    height: 20px;
+    margin-left: 20px;
+    color: rgb(64, 74, 148);
+    cursor: pointer;
+    
+}
+
+.perfil-filtro button:hover{
+    opacity: 0.8;
+    color: rgba(102, 113, 192, 0.844);
+}
+
+.paginacao-filtro{   
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 150px;
+    margin-left: 740px;   
+    padding-right: 5px; 
+}
+
+.paginacao-filtro button{
+    width: 100%;
+    height: 20px;
+    background: #161659cd;
+    border: 0;
+    border-radius: 8px;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    margin-top: 16px; 
+    margin-left: 6px;
+    
+    cursor: pointer;
+}
+
+.paginacao-filtro button:hover{
+    opacity: 0.8;
+}

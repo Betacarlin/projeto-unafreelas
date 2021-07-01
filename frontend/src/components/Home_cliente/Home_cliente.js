@@ -122,6 +122,7 @@ function Home_cliente() {
                             <img id = 'lupa' src={lupa} alt = 'lupa'/>
                         </NavLink>
                     </div>
+                    
                     {usuario.map(us =>(
                         <li key = {us.id}>
                         <img src={`http://localhost:3333/${us.imagem}`} alt="img-header" id = "imgheader" />
