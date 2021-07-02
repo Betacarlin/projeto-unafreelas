@@ -19,6 +19,7 @@ function Cadastro_cliente() {
     
     
     const submitCad = () => {
+      if(nome != "" && email != "" && senha != "" && confirmSenha != ""){
       api.post('usuarios',{
         nome : nome,
         email: email,
@@ -27,7 +28,11 @@ function Cadastro_cliente() {
       }).then(() => {
         alert ("Cadastro de cliente realizado com sucesso")
       })
-      history.push('/Home_cliente')
+      history.push('/Login')
+      }
+      else{
+        alert("Todos os campos devem ser preenchidos!")
+      }
     };
 
     const checkValidation = (e) =>{

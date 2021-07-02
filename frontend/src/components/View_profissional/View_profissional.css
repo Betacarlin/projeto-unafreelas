@@ -36,6 +36,7 @@
     right: 0;
     margin-right: 95px;
     color: white;
+    top: 3%;
 }
 
 .view-container header li{
@@ -47,8 +48,8 @@
 
 .view-container header li img{
     width: 100%;
-    max-width: 60px;
-    height: 60px;
+    max-width: 45px;
+    height: 45px;
     max-height: 100%;
     margin-right: 130px;
     border-radius: 28px;
@@ -69,6 +70,7 @@
 .view-container header div img{
     position: absolute;
     left: 0;
+    top: 2%;
     margin-left: 790px;
 }
 

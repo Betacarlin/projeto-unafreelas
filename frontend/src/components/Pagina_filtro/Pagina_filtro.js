@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import logo from '../../imagens/logo_2.png';
+import logo from '../../imagens/logo_4.png';
 import icon_1 from '../../imagens/icon_andamento.png';
 import lupa from '../../imagens/lupa.png';
 import {useHistory,NavLink} from 'react-router-dom';

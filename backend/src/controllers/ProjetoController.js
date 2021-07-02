@@ -30,7 +30,7 @@ module.exports = {
         const projeto = connection('projeto')    
 
         projeto
-            .select('usuario.nome','projeto.nome_projeto','projeto.data_soli','projeto.id_post').from('usuario')
+            .select('usuario.nome','projeto.nome_projeto','projeto.data_soli','projeto.id_post','projeto.descricao').from('usuario')
             .join('projeto', 'usuario.id', 'projeto.id_solicitante')
             .where({ id_profissional: id_profissional, status_projeto:'em andamento' })
             .limit(4)

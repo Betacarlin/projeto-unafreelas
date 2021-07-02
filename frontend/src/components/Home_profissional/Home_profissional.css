@@ -1,6 +1,6 @@
 .home-container{
     width: 100vw;
-    max-width: 1360px;
+    max-width: 1313px;
 }
 
 .home-container header{
@@ -47,8 +47,8 @@
 
 .home-container header li img{
     width: 100%;
-    max-width: 60px;
-    height: 60px;
+    max-width: 45px;
+    height: 45px;
     max-height: 100%;
     margin-right: 130px;
     border-radius: 28px;
@@ -62,7 +62,7 @@
     font-size: 15px;
     width: 200px;
     height: 20px;
-    margin-left: 160px;
+    margin-left: 200px;
     margin-top: 5px;
 }
 
@@ -272,4 +272,115 @@
 
 .Aceitar button:hover{
     background-color: #19991d;
+}
+
+
+.form-perfil{
+    display: flex;
+    align-items: center;
+}
+
+.imagem{
+    margin-left: 10px;
+}
+
+.form-perfil p1{
+    position: absolute;
+    top:32%;
+    left: 20%;
+    margin-left: 10px;
+}
+
+.nome{
+    position: absolute;
+    width: 100vw;
+    max-width: 434px;
+    height: 25px;
+    border-radius: 20px;
+    outline: none;
+    border: 1px solid;
+    top:32%;
+    left: 25%;
+    font-size: 15px;
+}
+
+.form-perfil p2{
+    position: absolute;
+    top:39%;
+    left: 20%;
+    margin-left: 10px;
+}
+
+.email{
+    position: absolute;
+    width: 100vw;
+    max-width: 434px;
+    height: 25px;
+    border-radius: 20px;
+    outline: none;
+    border: 1px solid;
+    top:39%;
+    left: 25%;
+    font-size: 15px;
+}
+
+.form-perfil p3{
+    position: absolute;
+    top:46%;
+    left: 20%;
+    margin-left: 10px;
+}
+
+.razao{
+    position: absolute;
+    width: 100vw;
+    max-width: 380px;
+    height: 25px;
+    border-radius: 20px;
+    outline: none;
+    border: 1px solid;
+    top:46%;
+    left: 29%;
+    font-size: 15px;
+}
+
+.select{
+    position: absolute;
+    top: 55%;
+    left: 21%;
+    border-radius: 24px;
+    font-size: 15px;
+    text-align:  center;
+    width: 200px;
+    outline: none;
+    border: 1;
+    -webkit-appearance: none; 
+    overflow:hidden;
+    padding: 7px;
+    background: url(http://www.webcis.com.br/images/imagens-noticias/select/ico-seta-appearance.gif) no-repeat #eeeeee;
+    background-position: 170px center;
+    cursor: pointer;
+}
+
+.form-perfil button{
+    width: 100%;
+    max-width: 95px;
+    height: 30px;
+    background: none;
+    outline: none;
+    border: 1px solid;
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+    font-weight: 750;
+    transition: all 0.3s ease-out;
+    background-color: transparent;
+    
+    cursor: pointer;
+    position: absolute;
+    top: 74%;
+    right: 21%;
+}
+
+.form-perfil button:hover{
+    background-color: #19991de0;
 }

@@ -23,6 +23,8 @@ function Login() {
           localStorage.setItem('Nome', res.data.nome);
           localStorage.setItem('Email', res.data.email);
           localStorage.setItem('Id', res.data.id);
+          localStorage.setItem('Razao_social',res.data.razao_social);
+          localStorage.setItem('Tipo_negocio',res.data.tipo_negocio);
 
           if(localStorage.getItem('tipo_usuario')==0){
             history.push('/Home_cliente')

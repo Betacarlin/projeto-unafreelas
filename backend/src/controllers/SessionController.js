@@ -1,4 +1,5 @@
 const connection = require('../database/connection');
+const bcrypt = require('bcrypt');
 
 module.exports = {
     async create(request, response) {
@@ -6,14 +7,15 @@ module.exports = {
 
         const user = await connection('usuario')
         .where('email', email)
-        .andWhere('senha', senha)
-        .select('id','nome','tipo_usuario', 'email')
+        .select('id','nome','tipo_usuario', 'email','razao_social','tipo_negocio','senha')
         .first();
 
-        if(!user) {
-            return response.status(400).json({ error: 'Usuario não encontrado para essas credenciais'});
+        if(user) {
+            const validPass = await bcrypt.compare(senha,user.senha)
+            if(validPass){
+                return response.json(user);
+            }
         }
 
-        return response.json(user);
     }
 }

@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import logo from '../../imagens/logo_2.png';
+import logo from '../../imagens/logo_4.png';
 import icon from '../../imagens/icon_andamento.png';
 import icoon from '../../imagens/icon_pendentes.png';
 import lupa from '../../imagens/lupa.png';
@@ -8,9 +8,17 @@ import api from '../../service/api';
 import './Home_profissional.css';
 import Modal from '../Popup_view/Popup_view';
 
+
 function Home_profissional() {
     const nome = localStorage.getItem('Nome');
     const id_profissional = localStorage.getItem('Id');
+    const razao_social= localStorage.getItem('Razao_social');
+    const email = localStorage.getItem('Email');
+    const tipo_negocio = localStorage.getItem('Tipo_negocio');
+    const [name,setName] = useState('');
+    const [emails,setEmails] = useState('');
+    const [razao,setRazao] = useState('');
+    const [tiponeg,setTipoNeg] = useState('');
     const history = useHistory();
     const [projetosAnd, setProjetosAnd] = useState([]);
     const [projetosPen, setProjetosPen] = useState([]);
@@ -62,9 +70,17 @@ function Home_profissional() {
     async function uploadImagem(id_profissional){
 
         let file = imagem.file;
+        let nome = name;
+        let email = emails;
+        let razao_social = razao;
+        let tipo_negocio = tiponeg; 
         
         let formdata = new FormData();
-        
+
+        formdata.set('nome',nome);
+        formdata.set('email',email);
+        formdata.set('razao_social',razao_social);
+        formdata.set('tipo_negocio', tipo_negocio);
         formdata.append('imagem',file);
 
         try {
@@ -75,7 +91,11 @@ function Home_profissional() {
                    'Content-Type': 'multipart/form-data',
                },
             },);
-            alert('Imagem de perfil alterada, com sucesso');
+            alert('Perfil alterado com sucesso!');
+            localStorage.setItem('Email',email);
+            localStorage.setItem('Nome',nome);
+            localStorage.setItem('Razao_social',razao_social);
+            localStorage.setItem('Tipo_negocio',tipo_negocio);
             window.location.reload();
            }catch(err){
                alert('Arquivos com extensão somente jpg, png e jpeg! \n \n' + err);
@@ -205,7 +225,7 @@ function Home_profissional() {
                     </li>
                     ))}
                     <span>{nome}</span>
-                    <button type = "button" onClick = {logOut}>Sair</button>
+                    <button type = "button"  onClick = {logOut}>Sair</button>
                 
             </header>
             <div className = "perfil-container1">
@@ -219,14 +239,29 @@ function Home_profissional() {
             </div>
             {buttonPopup ? (
                 <Modal onClose = {() =>setButtonPopup(false)}>
+                    <div className = "form-perfil">
                     <form encType="multipart/form-data" onSubmit={() => {uploadImagem(id_profissional)}}>
                     <input
+                        className = "imagem"
                         type="file"
                         name="imagem"
                         onChange={(e) => input(e)}
                     />
-                    <button type = "submit" >ok</button>
-                </form>
+                    <p1>Nome </p1>
+                    <input className = "nome" type = "text" placeholder = {nome} value = {name} onChange={e => setName(e.target.value)}/>
+                    <p2>Email </p2>
+                    <input className = "email" type = "text" placeholder = {email} value = {emails} onChange={e => setEmails(e.target.value)}/>
+                    <p3>Razao Social </p3>
+                    <input className = "razao" type = "text" placeholder = {razao_social} value = {razao} onChange={e => setRazao(e.target.value)}/>
+                    <select className = "select" onChange = {(e)=> setTipoNeg(e.target.value)}>
+                        <option value = "Tecnologia">Tecnologia</option>
+                        <option value = "Saude">Saúde</option>
+                        <option value = "Direito">Direito</option>
+                        <option value = "Engenharia">Engenharia</option>
+                    </select>
+                    <button type = "submit" >Editar</button>
+                    </form>
+                    </div>
                 </Modal>
             ):null}  
             <div className = "call-container-andamento">
@@ -237,15 +272,17 @@ function Home_profissional() {
                 </div>
                 {projetosAnd.map(pj => (
                        <li key = {pj.id_post}>
-
+                          
                           <p1>{pj.nome_projeto}</p1>
 
                           <p2>{pj.data_soli}</p2>
 
                           <p3>{pj.nome}</p3>
-
+                     
                        </li>
+                       
                 ))}
+                 
             <div className="paginacao">
                 <button type="button" onClick={previousPageAnd}>Anterior</button>
                 <button type="button" onClick={nextPageAnd}>Próxima</button>
@@ -253,6 +290,7 @@ function Home_profissional() {
                 
             </ul>
             </div>
+
             
             <div className = "call-container-pendentes">
                 <ul> 

@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const connection = require('../database/connection');
+const bcrypt = require('bcrypt');
 
 
 module.exports = {
@@ -10,19 +11,18 @@ module.exports = {
         return response.json(usuarios);
     },
     async create(request, response) {
-        const { id, nome, email, senha, tipo_usuario, razao_social, tipo_negocio } = request.body;
+        const { id, nome, email,senha,tipo_usuario, razao_social, tipo_negocio } = request.body;
+        const hash = await bcrypt.hash(senha,10);
 
-        // const id = crypto.randomBytes(8).toString('HEX');
-
-        await connection('usuario').insert({ id, nome, email, senha, tipo_usuario, razao_social, tipo_negocio })
-
+        await connection('usuario').insert({ id, nome, email, senha:hash, tipo_usuario, razao_social, tipo_negocio })
         return response.json({ id });
     },
     async createImagem(request,response,){
         const imagem = request.file.path;
+        const {nome,email,razao_social,tipo_negocio} = request.body;
         const { id } = request.params;
 
-        await connection ('usuario').where('id',id).update({imagem:imagem});
+        await connection ('usuario').where('id',id).update({nome:nome,email:email,razao_social:razao_social,tipo_negocio:tipo_negocio,imagem:imagem});
         return response.status(204).send();    
 
     },

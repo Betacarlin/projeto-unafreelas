@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import logo from '../../imagens/logo_2.png';
+import logo from '../../imagens/logo_4.png';
 import icon from '../../imagens/icon_andamento.png';
 import icoon from '../../imagens/icon_pendentes.png';
 import lupa from '../../imagens/lupa.png';
@@ -22,6 +22,7 @@ function View_profissional() {
     const [buttonPopup,setButtonPopup] = useState(false);
     const [projetosAnd, setProjetosAnd] = useState([]);
     const [projetosPen, setProjetosPen] = useState([]);
+    let [page, setPage] = useState(1);
     const [usuario, setUsuario] = useState([]);
     const [userImg,setUserImg] = useState([]);
     const [filtro, setFiltro] = useState('');
@@ -100,6 +101,76 @@ function View_profissional() {
           }
     };
 
+    function nextPageAnd() {
+
+        setPage(page += 1);
+        api.get(`projetos/andamento?page=${page}&id_profissional=${viewid}`, {
+            headers: {
+                Authorization: viewid,
+            }
+        }).then(response => {
+            if (response.data < [1]) {
+                alert("Não há mais registros !");
+                setPage(page -= 1);
+            }
+            else {
+                setProjetosAnd(response.data)
+            }
+        });
+            window.scrollTo(0, 0);      
+    };
+
+    function previousPageAnd() {
+
+        if (page === 1) {
+            return alert("Esta é a página inicial !");
+        }
+        setPage(page -= 1);
+        api.get(`projetos/andamento?page=${page}&id_profissional=${viewid}`, {
+            headers: {
+                Authorization: viewid,
+            }
+        }).then(response => {
+            setProjetosAnd(response.data);
+        });
+        window.scrollTo(0, 0); 
+    };
+
+    function nextPagePen() {
+
+        setPage(page += 1);
+        api.get(`projetos/pendente?page=${page}&id_profissional=${viewid}`, {
+            headers: {
+                Authorization: viewid,
+            }
+        }).then(response => {
+            if (response.data < [1]) {
+                alert("Não há mais registros !");
+                setPage(page -= 1);
+            }
+            else {
+                setProjetosAnd(response.data)
+            }
+        });
+            window.scrollTo(0, 0);      
+    };
+
+    function previousPagePen() {
+
+        if (page === 1) {
+            return alert("Esta é a página inicial !");
+        }
+        setPage(page -= 1);
+        api.get(`projetos/pendente?page=${page}&id_profissional=${viewid}`, {
+            headers: {
+                Authorization: viewid,
+            }
+        }).then(response => {
+            setProjetosAnd(response.data);
+        });
+        window.scrollTo(0, 0); 
+    };
+
     function logOut(){
         localStorage.clear();
         history.push('/');
@@ -170,6 +241,10 @@ function View_profissional() {
                          
                        </li>
                 ))}
+            <div className="paginacao">
+                <button type="button" onClick={previousPageAnd}>Anterior</button>
+                <button type="button" onClick={nextPageAnd}>Próxima</button>
+            </div>
             </ul>
             </div>
             <div className = "call-container-pendentes-view">
@@ -190,6 +265,10 @@ function View_profissional() {
 
                        </li>
                     ))}
+                <div className="paginacao">
+                    <button type="button" onClick={previousPagePen}>Anterior</button>
+                    <button type="button" onClick={nextPagePen}>Próxima</button>
+                </div>
                 </ul>
             </div>
         </div>

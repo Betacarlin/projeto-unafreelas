@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import logo from '../../imagens/logo_2.png';
+import logo from '../../imagens/logo_4.png';
 import icon from '../../imagens/icon_andamento.png';
 import lupa from '../../imagens/lupa.png';
 import {useHistory,NavLink} from 'react-router-dom';
@@ -10,7 +10,10 @@ import Modal from '../Popup_view/Popup_view';
 function Home_cliente() {
     const nome = localStorage.getItem('Nome');
     const id_solicitante = localStorage.getItem('Id');
+    const email = localStorage.getItem('Email');
     const history = useHistory();
+    const [name,setName] = useState('');
+    const [emails,setEmails] = useState('');
     const [projetos, setProjetos] = useState([]);
     const [usuario, setUsuario] = useState([]);
     let [page, setPage] = useState(1);
@@ -48,11 +51,15 @@ function Home_cliente() {
     
     async function uploadImagem(id_solicitante){
 
-         let file = imagem.file;
+        let file = imagem.file;
+        let nome = name;
+        let email = emails;
          
          let formdata = new FormData();
          
          formdata.append('imagem',file);
+         formdata.set('nome',nome);
+         formdata.set('email',email);
 
          try {
              await api.patch(`usuarios/imagem/${id_solicitante}`,formdata
@@ -62,7 +69,9 @@ function Home_cliente() {
                     'Content-Type': 'multipart/form-data',
                 },
              },);
-             alert('Imagem de perfil alterada, com sucerro');
+             alert('Perfil alterado com sucesso!');
+             localStorage.setItem('Email',email);
+             localStorage.setItem('Nome',nome);
              window.location.reload();
             }catch(err){
                 alert('Arquivos com extensão somente jpg, png e jpeg!\n \n' + err);
@@ -115,11 +124,11 @@ function Home_cliente() {
         <div className = "home-container">
             <header> 
                     
-                    <img id = 'logo' src={logo} alt = 'logo'/>
+                    <img className = "logo" id = 'logo' src={logo} alt = 'logo'/>
                     <div className = "search-box">
                         <input type = 'text' onChange={e => setFiltro(e.target.value)}/>
                         <NavLink to = '/Pagina_filtro'>
-                            <img id = 'lupa' src={lupa} alt = 'lupa'/>
+                            <img className = 'lupa' id = 'lupa' src={lupa} alt = 'lupa'/>
                         </NavLink>
                     </div>
                     
@@ -143,14 +152,20 @@ function Home_cliente() {
             </div>
             {buttonPopup ? (
                 <Modal onClose = {() =>setButtonPopup(false)}>
+                    <div className = "form-perfil">
                     <form encType="multipart/form-data" onSubmit={() => {uploadImagem(id_solicitante)}}>
                     <input
                         type="file"
                         name="imagem"
                         onChange={(e) => input(e)}
                     />
-                    <button type = "submit" >ok</button>
+                    <p1>Nome </p1>
+                    <input className = "nome" type = "text" placeholder = {nome} value = {name} onChange={e => setName(e.target.value)}/>
+                    <p2>Email </p2>
+                    <input className = "email" type = "text" placeholder = {email} value = {emails} onChange={e => setEmails(e.target.value)}/>
+                    <button type = "submit" >Editar</button>
                 </form>
+                </div>
                 </Modal>
             ):null}     
             <div className = "call-container">

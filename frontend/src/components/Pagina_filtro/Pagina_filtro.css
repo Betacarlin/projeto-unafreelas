@@ -35,7 +35,7 @@
     right: 0;
     margin-right: 95px;
     color: white;
-    top: 6%;
+    top: 3%;
 }
 
 .filtro-container header li{
@@ -46,12 +46,13 @@
 }
 
 .filtro-container header li img{
-    width: 100%;
-    max-width: 60px;
-    height: 60px;
-    max-height: 100%;
-    margin-right: 50px;
+    width: 100vw;
+    max-width: 45px;
+    height: auto;
+    max-height: 45px;
+    margin-right: 130px;
     border-radius: 28px;
+    overflow: hidden;
 }
 
 .search-box input {
@@ -69,6 +70,7 @@
 .filtro-container header div img{
     position: absolute;
     left: 0;
+    top: 2%;
     margin-left: 790px;
 }
 

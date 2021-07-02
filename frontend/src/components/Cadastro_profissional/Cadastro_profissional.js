@@ -20,6 +20,7 @@ function Cadastro_profissional() {
 
   
   const submitCad = () => {
+    if(nome != "" && email != "" && senha != "" && confirmSenha != "" && razao_social != ""){
     api.post('usuarios',{
       nome : nome,
       email: email,
@@ -30,7 +31,11 @@ function Cadastro_profissional() {
     }).then(() => {
       alert ("Cadastro de cliente realizado com sucesso")
     })
-    history.push('/Home_profissional')
+    history.push('/Login')
+    }
+    else{
+      alert("Todos os campos devem ser preenchidos!")
+    }
   };
 
   const checkValidation = (e) =>{
